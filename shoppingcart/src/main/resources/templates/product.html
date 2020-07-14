@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<div th:replace="/fragments/head"></div>
+
+
+<body>
+    <div th:replace="/fragments/nav::nav-front"></div>
+
+    <div class="container-fluid mt-5">
+
+        <div class="row">
+
+
+            <div th:replace="/fragments/categories"></div>
+            <div class="col">
+                <!--to leave some space-->
+            </div>
+            <div class="col-8">
+                <h2 class="display-3 mb-5" th:text="${categoryName} ?:'All Products'"></h2>
+
+                <div class="row">
+                    <div class="col-4" th:each="product : ${products}">
+                        <p>
+                            <img style="width:200px" th:src="@{'/media/'+ ${product.image}}">
+
+                        </p>
+                        
+                        <h5 th:text="${product.name}"></h5>
+                        <div class="desc" th:utext="${product.description}"></div>
+                        <h6 th:text="'$'+ ${product.price}"></h6>
+                        <div style="position: relative;">
+                            <p>
+                                <a class="btn btn-primary addToCart" th:attr="data-id=${product.id}" th:href="@{'/cart/add/'+ ${product.id}}">Add to cart</a>
+                            <img class="ajaxLoader d-none" src="/images/ajax-loader.gif">
+                            </p>
+                            <div class="btn btn-success btn-sm productAdded hide ">Product added</div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- /container -->
+
+
+                <nav class="mt-3" th:if="${count>productperpage}">
+                    <ul class="pagination">
+                        <li class="page-item" th:if="${page > 0}">
+                            <a th:href="@{${#httpServletRequest.requestURI}} + '?page=__${page-1}__'" class="page-link">Previous</a>
+                        </li>
+                <li class="page-item" th:each="number: ${#numbers.sequence(0, pageCount-1)}" th:classappend="${page==number} ? 'active' : ''">
+      <a th:href="@{${#httpServletRequest.requestURI}} + '?page=__${number}__'" class="page-link" th:text="${number+1}"></a>
+     </li>
+     <li class="page-item" th:if="${page < pageCount-1}">
+            <a th:href="@{${#httpServletRequest.requestURI}} + '?page=__${page+1}__'" class="page-link">Next</a>
+        </li>
+    </ul>
+    </nav>
+    </div>
+    </div>
+</div>
+    <footer th:replace="/fragments/footer"></footer>
+    <script>
+        
+        $("a.addToCart").click(function (e) {
+            e.preventDefault();
+
+            let $this = $(this);
+
+            $this.next().removeClass('d-none');
+
+            let id = $this.attr("data-id");
+            let url = "/cart/add/"+id;
+
+            $.get(url, {}, function (data) {
+                $('div.cart').html(data);
+            }).done(function () {
+                $this.parent().parent().find('div.productAdded').fadeIn();
+                $this.next().addClass('d-none');
+                setTimeout(() => {
+                    $this.parent().parent().find('div.productAdded').fadeOut();
+                }, 1000);
+            });
+        });
+
+    </script>
+</body>
+
+</html>

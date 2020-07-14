@@ -1,0 +1,53 @@
+body{
+
+  /* background-color: rgb(127, 197, 255); */
+}
+span.error{
+    color: red !important
+}
+table.sorting tr:not(.home) {
+    cursor: pointer;
+}
+
+.ui-state-highlight {
+    border: 1px dashed #ccc;
+}
+.display-2
+{
+    font-size: 60px;
+    
+}
+.ck.ck-content{
+    height:200px;
+}
+div .productAdded {
+
+    position: absolute;
+    bottom:5px;
+    left:110px;
+}
+
+.hide
+{
+    display:none;
+}
+.overlay
+{   position: absolute;
+    
+    height:100%;
+    width:100%;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+.overlay img{
+    position: absolute;
+    top:50%;
+
+}
+#paypalform
+{
+    display: none;
+}
+.row h6{
+    margin-top:-10px;
+    margin-bottom:17px;
+}

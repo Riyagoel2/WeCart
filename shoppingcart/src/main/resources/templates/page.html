@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<div th:replace="/fragments/head"></div>
+
+
+<body>
+         <div th:replace="/fragments/nav::nav-front"></div>
+         <div class="container-fluid">
+      
+         
+<br>
+<br>
+        <div class="row">
+                <div th:replace="/fragments/categories"></div>
+            <div class="col"> <!--to leave some space-->
+            </div>
+        
+            <div class="col-5" th:utext="${page.content}"> </div>  <!--without 'u' the text will be displayed with html tags-->
+            <div class="col"></div>
+        </div>
+    </div> <!-- /container -->
+    <footer th:replace="/fragments/footer"></footer>
+</body>
+
+</html>
